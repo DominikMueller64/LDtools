@@ -1,0 +1,136 @@
+---
+title: "LDtools"
+author: "Dominik Müller"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{LDtools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+Genetic analyses often involve the computation of linkage disequilibrium (LD)
+between different loci. Linkage disequilibrium, as commonly defined, refers to
+the non-random association between marker alleles and can arise from linkage of
+loci, selection and population bottlenecks. The purpose of the package LDtools
+is to aid in the analysis of LD by supplying a small number of functions for its
+computation. LDtools supports the computation of different measures of LD for
+phased genotypic data (arbitrary ploidy level) and for unphased genotypic data
+(only diploid species).
+
+## Measures of LD
+Consider two bi-allele loci with allele $A$ and $a$ as well as alleles $B$ and $b$. Let $p_A$ and $p_B$ denote the allele frequencies of llele $A$ and $B$, *i.e.*, the probability that a randomly chosen gamete from the population carries both $A$ and $B$. Let $p_{AB}$ denote the joint probability that alleles $A$ and $B$ occur on the same gamete. A common measure of LD is
+
+$$D = p_{AB} - p_A p_B,$$
+which is the difference of the joint probability $p_{AB}$ and the product of both marginal probabilities $p_A$ and $p_B$. In case of linkage disequilibrium, we have $D \neq 0$, otherwise $D = 0$ (linkage equilibrium). An undesirable property of this coefficient is that its boundaries depend on the underlying allele frequencies, so that it is difficult to interpret across different pairs of loci. A scaled version is $D' \in [0, 1]$, which is defined as
+
+$$D' = \frac{D}{D_{min}},$$
+where
+ \begin{equation}
+    D_{min}=
+    \begin{cases}
+      \max \left \{-p_A p_B, -(1 - p_A) (1 - p_B) \right \}, & \text{if}\ D < 0 \\
+      \min \left \{p_A (1 - p_B), (1 - p_A) p_B \right \}, & \text{otherwise.}
+    \end{cases}
+  \end{equation}
+
+Another frequently used measure that is the pearson correlation coefficient between marker allele is
+
+$$
+r = \frac{D}{\sqrt{p_A (1 - p_A)} \sqrt{p_B (1 - p_B)}},
+$$
+which also has the desirable property of $r \in [0, 1].$. More information on these measures can be found on https://en.wikipedia.org/wiki/Linkage_disequilibrium.
+
+If genotypic data are phased (i.e., it is known which allele resides on which haplotype), $p_{AB}$ can be easily computed. However, for unphased data, it is not possible to distinguish genotype $AB/ab$ from $Ab/aB$ and $p_{AB}$ cannot be directly computed. It this therefore estimate via a Maximum Likelihood approach, which aimes to maximize the probabiliy of $p_{AB}$ under the assumption that both loci are in Hardy-Weinberg Equilibrium.
+
+## Functions
+The package LDtools has two core functions, `LD` and `LD_mult`. The function `LD` can be used to compute LD between two loci, whereas `LD_mult` computed LD among multiple combinations of loci. The functionality of these functions is best demonstrated by examples.
+
+The data set `population` includes haplotype data for 100 simulated individuals at 2,200 bi-allelic loci (2000 SNPs and 200 QTL) and genetic positions of all loci.
+```{r, missing=FALSE, warning=FALSE}
+library('magrittr') # %>% pipe operator
+data('population', package = 'LDtools', envir = .GlobalEnv)
+```
+
+For computing LD between two loci, we can use the function `LD`:
+
+```{r, missing=FALSE, warning=FALSE, }
+library('LDtools')
+LD(x = X[, 1], y = X[, 2], is_phased = TRUE, any_na = FALSE)
+```
+
+The output of `LD` is a list with elements `n` (number of observations used to compute LD), `D`, `Dprime` and `r` as defined above, as well as `chi2` (Chi-Square test statistic) and `pval` (associated p-value) of an independency test between both loci. If any of the loci is monomorphic, the function returns `NaN` for the statistics. The argument to `is_phased` is `TRUE`, as we are dealing now with phased data.
+
+To demonstrate the computation for unphased genotypic data, we simulate two loci with the function `gen_geno`, which is only there for testing purposes. We then subsequently translate these from a character coding to numeric coding with `transform_geno`.
+```{r}
+tmp <- gen_geno(n = 20L, m = 2L) %>% transform_geno()
+LD(x = tmp$geno[, 1], y = tmp$geno[, 2], is_phased = FALSE, any_na = TRUE)
+```
+
+
+The function `LD` is not efficient for comparisons among a large number of loci.
+For this purpose, we can use the funcion `LD_mult`, which takes as main
+arguments a numeric matrix `X` with haplotype/genotype data and another matrix
+`matr`, which specifies the pairs of loci for which LD should be computed. We
+can set up the matrix `matr` by hand or use one of the supplied assistant
+functions (`comb_all`, `comb_adj`, `comb_nearest`, `comb_nearest_k`,
+`comb_flank`, `comb_wind` or `comb_sliding`). For instance, if we want to
+compute the average LD ($r^2$) for all pairs with a minimum distance of 5 cM and a maximum distance
+of 6 cM, we can used `comb_wind`:
+
+```{r}
+pos <- map$pos
+matr <- comb_wind(pos = pos, min_dist = 5, max_dist = 6)
+dat <- LD_mult(X, matr, pos, is_phased = TRUE)
+```
+The arguments `min_dist` and `max_dist` can also be vectors, in which case mutliple windows are considered.
+
+A sliding window approach can be used to summarize LD between loci across entire chromosomes. For instance, we can construct a sliding window with a width of 5 cM and advance it by 1 cM at a time as follows:
+
+```{r, fig.height=4, fig.width=6}
+matr <- comb_sliding(pos, start = 0, width = 5, advance = 1)
+dat <- LD_mult(X, matr, pos)
+# Summarize data for plotting.
+dat <- by(data = dat, INDICES = factor(dat$block),
+          FUN = function(x) {
+          data.frame(pos = mean(c(x$pos1, x$pos2)),
+                     r = mean(x$r, na.rm = TRUE))
+          },
+          simplify = FALSE) %>% do.call(what = rbind)
+
+with(dat, plot(pos, r, type = 'l'))
+```
+
+As a side not, `LD_mult` internally caches the results of all computation within
+a single function call. Hence, the overlap of pairs in a sliding window only
+imposes a minimal increase in computation time.
+
+The package also contains a function `LP` for computing linkage phase similarity between two population, which is illustrated here:
+
+```{r, fig.height=4, fig.width=6}
+mid <- nrow(X) %/% 2L
+X1 <- X[1L:mid, , drop = FALSE]
+X2 <- X[(mid + 1L):nrow(X), , drop = FALSE]
+min_dist <- seq(0, floor(max(pos) / 2), by = 1)
+max_dist <- min_dist + 1
+
+dat <- LP(X1, X2, pos, min_dist, max_dist, method = 'correlation')
+with(dat,
+ plot(x = (min_dist + max_dist) / 2, y = lps, type = 'o', ylim = c(0, 1))
+)
+```
+
+
+## Efficiency
+LDtools strives to strike a balance between wealth of output, efficienty of
+computation and ease of usage. In general, if the goal is to compute $r$ or
+$r^2$ between all distinct pairs from a set of loci, the base function `cor` can be used
+and can be hardly beaten in terms of speed. However, for more complex
+combinations between loci, it is necessary to either first compute LD for all
+combinations and the filter out the interesting ones, or to compute LD between
+individual pairs of loci in custom loops at the R level, both alternatives are often either inefficient or impossible.
+In such circumstances, LDtools shines as neither computation time nor memory usage should blow up in your face as long a your specify reasonable parameters (which is ultimately your responsibility!). The interface of function `LD_mult` allows you to specify your own pairs of loci for which LD should be computed via the parameter `matr`.

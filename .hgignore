@@ -1,0 +1,12 @@
+syntax: glob
+*~
+*.o
+*.so
+.Rproj.user
+.Rhistory
+.RData
+*.rds
+*.csv
+*.Rproj
+inst/doc
+data-raw
