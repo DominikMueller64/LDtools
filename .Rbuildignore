@@ -3,3 +3,4 @@
 ^data-raw$
 ^testfile\.R$
 ^vignettes$
+^\.travis\.yml$
