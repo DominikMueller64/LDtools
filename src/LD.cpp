@@ -98,7 +98,7 @@ LD_out LD_struct(const arma::vec& x,
                  const bool is_phased)
 {
   LD_out ret;
-  double D, sum_prod, Dprime, r;
+  double D, sum_prod; 
   int n = x.n_elem;
   double qx = 1 - px;
   double qy = 1 - py;
@@ -121,22 +121,20 @@ LD_out LD_struct(const arma::vec& x,
     double pxy = optimum_pxy(n3x3, px, py, px * py + Dmin,
                              px * py + Dmax); // max. likel. for pAB
     D = pxy - px * py;
-    n = arma::accu(n3x3);
+    n = 2 * arma::accu(n3x3);
   }
-  Dprime = D / ((D > 0) ? Dmax : Dmin);
-  
   double prod = px * qx * py * qy;
-  r = D / sqrt(prod);
-  double chi2 = (2 * n * pow(D, 2)) / prod;
-  double pval = 1 - R::pchisq(chi2, 1, true, false);
+  double r = D / sqrt(prod);
+  double r2 = pow(r, 2);
+  double chi2 = n * r2;
   
   ret.n = n;
   ret.D = D;
-  ret.Dprime = Dprime;
+  ret.Dprime = D / ((D > 0) ? Dmax : Dmin);
   ret.r = r;
   ret.r2 = pow(r, 2);
   ret.chi2 = chi2;
-  ret.pval = pval;
+  ret.pval = 1 - R::pchisq(chi2, 1, true, false);
   return ret;
 }
 
@@ -210,7 +208,7 @@ Rcpp::List LD(const arma::vec& x,
                             Rcpp::Named("D") = t.D,
                             Rcpp::Named("Dprime") = t.Dprime,
                             Rcpp::Named("r") = t.r,
-                            Rcpp::Named("r2") = pow(t.r, 2),
+                            Rcpp::Named("r2") = t.r2,
                             Rcpp::Named("chi2") = t.chi2,
                             Rcpp::Named("pval") = t.pval);
   }
@@ -225,8 +223,6 @@ DataFrame LD_mult(arma::mat& X,
                   const bool is_phased,
                   const bool any_na)
 {
-  // const int N = X.n_rows;
-  // const int M = X.n_cols;
   int len = matr.n_rows;
   
   std::map<std::pair<int, int>, int> table;
@@ -297,10 +293,7 @@ Rcpp::DataFrame LD_mult_r_dev(arma::mat& X,
                     const bool any_na,
                     const bool cache)
 {
-  // const int N = X.n_rows;
-  // const int M = X.n_cols;
   int len = matr.n_rows;
-  
   Rcpp::IntegerVector blockv(len);
   Rcpp::NumericVector rv(len);
   
@@ -372,40 +365,40 @@ Rcpp::DataFrame LD_mult_r(arma::mat& X,
 }
 
 
-// [[Rcpp::export]]
-arma::mat test(const arma::mat& X) {
-  int n = X.n_rows;
-  int m = X.n_cols;
-
-  mat Xs(X.memptr(), n, m);
-  vec pv = conv_to< vec >::from(mean(Xs));
-  for (int j = 0; j < m; j++) {
-    double p = pv(j);
-    double s = sqrt(p * (1 - p));
-    for (int i = 0; i < n; i++) {
-      // Rcout << Xs(i, j) << std::endl;
-      Xs(i, j) = (Xs(i, j) - p) / s;
-    }
-  }
-  // return Xs;
-
-  mat out(m, m);
-  for (int i = 0; i < m - 1; i++) {
-    for (int j = i + 1; j < m; j++) {
-      // mat tmp = arma::cor(X.col(i), X.col(j));
-      // out(i, j) = tmp(0, 0);
-      // out(j, i) = tmp(0, 0);
-      // std::inner_product(Xs.begin_col(i), Xs.end_col(i), Xs.begin_col(j), 0.0);
-      double tmp = pow(arma::dot(Xs.col(i), Xs.col(j)) / n, 2);
-      out(i, j) = tmp;
-      out(j, i) = tmp;
-    }
-    // mat tmp = arma::cor(X.col(i));
-    out(i, i) = pow(arma::dot(Xs.col(i), Xs.col(i)) / n, 2);
-  }
-    out(m - 1, m - 1) = pow(arma::dot(Xs.col(m - 1), Xs.col(m - 1)) / n, 2);
-  // mat tmp = arma::cor(X.col(m - 1));
-  // out(m - 1, m - 1) = tmp(0, 0);
-  return out;
-}
-
+// // [[Rcpp::export]]
+// arma::mat test(const arma::mat& X) {
+//   int n = X.n_rows;
+//   int m = X.n_cols;
+// 
+//   mat Xs(X.memptr(), n, m);
+//   vec pv = conv_to< vec >::from(mean(Xs));
+//   for (int j = 0; j < m; j++) {
+//     double p = pv(j);
+//     double s = sqrt(p * (1 - p));
+//     for (int i = 0; i < n; i++) {
+//       // Rcout << Xs(i, j) << std::endl;
+//       Xs(i, j) = (Xs(i, j) - p) / s;
+//     }
+//   }
+//   // return Xs;
+// 
+//   mat out(m, m);
+//   for (int i = 0; i < m - 1; i++) {
+//     for (int j = i + 1; j < m; j++) {
+//       // mat tmp = arma::cor(X.col(i), X.col(j));
+//       // out(i, j) = tmp(0, 0);
+//       // out(j, i) = tmp(0, 0);
+//       // std::inner_product(Xs.begin_col(i), Xs.end_col(i), Xs.begin_col(j), 0.0);
+//       double tmp = pow(arma::dot(Xs.col(i), Xs.col(j)) / n, 2);
+//       out(i, j) = tmp;
+//       out(j, i) = tmp;
+//     }
+//     // mat tmp = arma::cor(X.col(i));
+//     out(i, i) = pow(arma::dot(Xs.col(i), Xs.col(i)) / n, 2);
+//   }
+//     out(m - 1, m - 1) = pow(arma::dot(Xs.col(m - 1), Xs.col(m - 1)) / n, 2);
+//   // mat tmp = arma::cor(X.col(m - 1));
+//   // out(m - 1, m - 1) = tmp(0, 0);
+//   return out;
+// }
+// 
