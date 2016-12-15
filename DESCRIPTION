@@ -5,7 +5,7 @@ Author: Dominik Mueller
 Maintainer: Dominik Mueller <Dominik_Mueller@uni-hohenheim.de>
 Description: Tools for Linkage Disequilibrium Analysis.
 Depends:
-    R (>= 3.3.2)
+    R (>= 3.3.1)
 License: GPL-3
 LazyData: true
 LinkingTo: Rcpp, RcppArmadillo, RcppProgress, BH
