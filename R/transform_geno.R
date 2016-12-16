@@ -26,10 +26,12 @@
 #' @return A numeric matrix of the same dimensions as geno containing the
 #' recoded genotypes.
 #' 
-#' @details Recoding is performed based on the major allele at the respective
-#' locus, i.e., if for instance the major allele is "A", the recoded
-#' genotypes of "A/A", "A/B", "B/A" and "B/B" will be 2, 1, 1, 0, given
-#' \code{sep = "/"}.
+#' @details A genotype must consist of a sequence of three characters,
+#' where the mittle character is the seperator as specified in
+#' \code{sep}. Recoding is performed based on the major allele at the
+#' respective locus, i.e., if for instance the major allele is "A",
+#' the recoded genotypes of "A/A", "A/B", "B/A" and "B/B" will be,
+#' 2, 1, 1, 0, given \code{sep = "/"}.
 #'
 #' @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 #'
@@ -40,14 +42,31 @@
 #' transform_geno(geno, sep = '/')
 #'
 #' @export
-transform_geno <- function (geno, sep = '/'){
-  
-  if (!is.matrix(geno) || !is.character(geno)) 
-    stop("'geno' must be a character matrix.")
-  
-  if (!is.character(sep) || length(sep) != 1L)
-    stop("'sep' must be a string.")
-    
+transform_geno <- function(geno, sep = '/', check = TRUE){
+
+  if (check) {
+    if (!is.matrix(geno) || !is.character(geno)) 
+      stop("'geno' must be a character matrix.")
+
+    if (!is.character(sep) || length(sep) != 1L)
+      stop("'sep' must be a string.")
+
+    # Check if the structure of genotypes is correct.
+    for(x in split(x = geno, f = col(geno))) {
+      x <- x[!is.na(x)]
+      uq <- character()
+      for(y in strsplit(x = x, split = '', fixed = TRUE)) {
+        if(length(y) != 3L || y[2L] != sep)
+          stop(paste0('Genotypic data do not comply with the',
+                      'required format'))
+        uq <- unique(c(uq, y))
+      }
+      if (!(length(uq) %in% c(2L, 3L)))
+        stop(paste0('There must be at least one and at maximum',
+                    'two allels per locus.'))
+    }
+  }
+
   n <- ncol(geno)
   new_geno <- matrix(NA_integer_, ncol = n, nrow = nrow(geno),
                      dimnames = dimnames(geno))

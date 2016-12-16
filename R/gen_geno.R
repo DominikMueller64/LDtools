@@ -28,18 +28,26 @@
 #' @param sep A character. The seperator used between nucleotides.
 #' 
 #' @details This function can be used to simulate genotypes and is mainly for
-#' testing purposes. 
-#' #' Note: If \code{shape1 == shape2}, the beta distribution is symmetric.
+#' testing purposes. The allele frequency of each locus is drawn from a beta with
+#' parameters \code{shape1} and \code{shape2}.
+#' Note: If \code{shape1 == shape2}, the beta distribution is symmetric.
 #' 
 #' @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 #' 
 #' @examples
-#' NULL
+#' .gen_geno(n = 2, m = 5) 
 #'  
 #' @export
-gen_geno <- function(nucleotides = c("A", "C", "G", "T"),
+.gen_geno <- function(nucleotides = c("A", "C", "G", "T"),
                      n, m, prob_na = 0.2,
                      shape1 = 4, shape2 = 4, sep = '/') {  
+
+  if (!is.atomic(nucleotides) || !is.character(nucleotides))
+    stop("'nucleotides' must be a character vector")
+
+  if (!is.character(sep) | length(sep) != 1)
+    stop("'sep' must be a single character.")
+
   geno <- matrix(NA_character_, nrow = n, ncol = m)
   for (j in seq_len(m)) {
     nuc <- sample(x = nucleotides, size = 2L, replace = FALSE)
