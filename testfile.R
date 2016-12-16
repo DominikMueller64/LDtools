@@ -1,3 +1,12 @@
+# some stuff to mess
+n <- 100
+m <- 1000
+X <- matrix(sample(c(0, 1), size = n * m, replace = TRUE), nrow = n)
+p <- colMeans(X)
+
+print('you are a fool')
+
+##############################
 n <- 100
 m <- 1000
 X <- matrix(sample(c(0, 1), size = n * m, replace = TRUE), nrow = n)
