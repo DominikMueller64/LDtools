@@ -90,10 +90,8 @@ y <- matrix( c('T/A', 'T/A', 'T/T', 'T/A', 'T/T', 'T/A', 'T/A', 'T/A',
 yt <- drop(transform_geno(matrix(y), sep = '/')$geno)
 
 
-microbenchmark::microbenchmark(
-ret_LDr <- LDr(x = x, y = y),
+ret_LDr <- LDr(x = x, y = y)
 ret_LDt <- LD(x = xt, y = yt, is_phased = FALSE, check = TRUE)
-)
 
 test_that("Output of LDtools::LD corresponds to LDretics::LD", {
   expect_equal(ret_LDt$D, ret_LDr$D, tolerance = 1e-3)
