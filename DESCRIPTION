@@ -21,7 +21,8 @@ Suggests:
     testthat,
     rmarkdown,
     magrittr,
-    genetics
+    genetics,
+    BiocInstaller
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 SystemRequirements: C++11
