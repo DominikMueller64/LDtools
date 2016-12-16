@@ -10,7 +10,7 @@ library('LDtools')
 LD(x = X[, 1], y = X[, 2], is_phased = TRUE, any_na = FALSE)
 
 ## ------------------------------------------------------------------------
-tmp <- gen_geno(n = 20L, m = 2L) %>% transform_geno()
+tmp <- .gen_geno(n = 20L, m = 2L) %>% transform_geno()
 LD(x = tmp$geno[, 1], y = tmp$geno[, 2], is_phased = FALSE, any_na = TRUE)
 
 ## ------------------------------------------------------------------------
