@@ -19,6 +19,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// comb_wind_sets
+arma::mat comb_wind_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b, const double min_dist, const double max_dist);
+RcppExport SEXP LDtools_comb_wind_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP, SEXP min_distSEXP, SEXP max_distSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_a(indices_aSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_b(indices_bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_a(pos_aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_b(pos_bSEXP);
+    Rcpp::traits::input_parameter< const double >::type min_dist(min_distSEXP);
+    Rcpp::traits::input_parameter< const double >::type max_dist(max_distSEXP);
+    rcpp_result_gen = Rcpp::wrap(comb_wind_sets(indices_a, indices_b, pos_a, pos_b, min_dist, max_dist));
+    return rcpp_result_gen;
+END_RCPP
+}
 // comb_adj
 arma::mat comb_adj(const arma::vec& pos);
 RcppExport SEXP LDtools_comb_adj(SEXP posSEXP) {
@@ -41,32 +57,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// comb_flank
-arma::mat comb_flank(const arma::ivec& indices, const arma::ivec& indices2, const arma::vec& pos, const arma::vec& pos2);
-RcppExport SEXP LDtools_comb_flank(SEXP indicesSEXP, SEXP indices2SEXP, SEXP posSEXP, SEXP pos2SEXP) {
+// comb_flank_sets
+arma::mat comb_flank_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b);
+RcppExport SEXP LDtools_comb_flank_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::ivec& >::type indices(indicesSEXP);
-    Rcpp::traits::input_parameter< const arma::ivec& >::type indices2(indices2SEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type pos(posSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type pos2(pos2SEXP);
-    rcpp_result_gen = Rcpp::wrap(comb_flank(indices, indices2, pos, pos2));
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_a(indices_aSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_b(indices_bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_a(pos_aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_b(pos_bSEXP);
+    rcpp_result_gen = Rcpp::wrap(comb_flank_sets(indices_a, indices_b, pos_a, pos_b));
     return rcpp_result_gen;
 END_RCPP
 }
-// comb_nearest_k
-arma::mat comb_nearest_k(const arma::ivec& indices, const arma::ivec& indices2, const arma::vec& pos, const arma::vec& pos2, const int k);
-RcppExport SEXP LDtools_comb_nearest_k(SEXP indicesSEXP, SEXP indices2SEXP, SEXP posSEXP, SEXP pos2SEXP, SEXP kSEXP) {
+// comb_nearest_k_sets
+arma::mat comb_nearest_k_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b, const int k);
+RcppExport SEXP LDtools_comb_nearest_k_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::ivec& >::type indices(indicesSEXP);
-    Rcpp::traits::input_parameter< const arma::ivec& >::type indices2(indices2SEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type pos(posSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type pos2(pos2SEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_a(indices_aSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_b(indices_bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_a(pos_aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_b(pos_bSEXP);
     Rcpp::traits::input_parameter< const int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(comb_nearest_k(indices, indices2, pos, pos2, k));
+    rcpp_result_gen = Rcpp::wrap(comb_nearest_k_sets(indices_a, indices_b, pos_a, pos_b, k));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -81,6 +97,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double >::type width(widthSEXP);
     Rcpp::traits::input_parameter< const double >::type advance(advanceSEXP);
     rcpp_result_gen = Rcpp::wrap(comb_sliding(pos, start, width, advance));
+    return rcpp_result_gen;
+END_RCPP
+}
+// comb_sliding_sets
+arma::mat comb_sliding_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b, const double start, const double width, const double advance);
+RcppExport SEXP LDtools_comb_sliding_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP, SEXP startSEXP, SEXP widthSEXP, SEXP advanceSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_a(indices_aSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_b(indices_bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_a(pos_aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_b(pos_bSEXP);
+    Rcpp::traits::input_parameter< const double >::type start(startSEXP);
+    Rcpp::traits::input_parameter< const double >::type width(widthSEXP);
+    Rcpp::traits::input_parameter< const double >::type advance(advanceSEXP);
+    rcpp_result_gen = Rcpp::wrap(comb_sliding_sets(indices_a, indices_b, pos_a, pos_b, start, width, advance));
     return rcpp_result_gen;
 END_RCPP
 }

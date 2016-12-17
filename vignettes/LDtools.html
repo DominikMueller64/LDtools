@@ -12,7 +12,7 @@
 
 <meta name="author" content="Dominik Müller" />
 
-<meta name="date" content="2016-12-07" />
+<meta name="date" content="2016-12-17" />
 
 <title>LDtools</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">LDtools</h1>
 <h4 class="author"><em>Dominik Müller</em></h4>
-<h4 class="date"><em>2016-12-07</em></h4>
+<h4 class="date"><em>2016-12-17</em></h4>
 
 
 
@@ -118,34 +118,34 @@ r = \frac{D}{\sqrt{p_A (1 - p_A)} \sqrt{p_B (1 - p_B)}},
 <span class="co">#&gt; [1] 0.3162393</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $chi2</span>
-<span class="co">#&gt; [1] 126.4957</span>
+<span class="co">#&gt; [1] 63.24786</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pval</span>
-<span class="co">#&gt; [1] 0</span></code></pre></div>
+<span class="co">#&gt; [1] 1.776357e-15</span></code></pre></div>
 <p>The output of <code>LD</code> is a list with elements <code>n</code> (number of observations used to compute LD), <code>D</code>, <code>Dprime</code> and <code>r</code> as defined above, as well as <code>chi2</code> (Chi-Square test statistic) and <code>pval</code> (associated p-value) of an independency test between both loci. If any of the loci is monomorphic, the function returns <code>NaN</code> for the statistics. The argument to <code>is_phased</code> is <code>TRUE</code>, as we are dealing now with phased data.</p>
-<p>To demonstrate the computation for unphased genotypic data, we simulate two loci with the function <code>gen_geno</code>, which is only there for testing purposes. We then subsequently translate these from a character coding to numeric coding with <code>transform_geno</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span><span class="kw">gen_geno</span>(<span class="dt">n =</span> 20L, <span class="dt">m =</span> 2L) %&gt;%<span class="st"> </span><span class="kw">transform_geno</span>()
+<p>To demonstrate the computation for unphased genotypic data, we simulate two loci with the function <code>.gen_geno</code>, which is only there for testing purposes. We then subsequently translate these from a character coding to numeric coding with <code>transform_geno</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span><span class="kw">.gen_geno</span>(<span class="dt">n =</span> 20L, <span class="dt">m =</span> 2L) %&gt;%<span class="st"> </span><span class="kw">transform_geno</span>()
 <span class="kw">LD</span>(<span class="dt">x =</span> tmp$geno[, <span class="dv">1</span>], <span class="dt">y =</span> tmp$geno[, <span class="dv">2</span>], <span class="dt">is_phased =</span> <span class="ot">FALSE</span>, <span class="dt">any_na =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; $n</span>
-<span class="co">#&gt; [1] 9</span>
+<span class="co">#&gt; [1] 24</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $D</span>
-<span class="co">#&gt; [1] -0.15</span>
+<span class="co">#&gt; [1] -0.02707047</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $Dprime</span>
-<span class="co">#&gt; [1] 0.9999997</span>
+<span class="co">#&gt; [1] 0.3034273</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $r</span>
-<span class="co">#&gt; [1] -0.6324553</span>
+<span class="co">#&gt; [1] -0.1317048</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $r2</span>
-<span class="co">#&gt; [1] 0.3999998</span>
+<span class="co">#&gt; [1] 0.01734617</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $chi2</span>
-<span class="co">#&gt; [1] 7.199996</span>
+<span class="co">#&gt; [1] 0.416308</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pval</span>
-<span class="co">#&gt; [1] 0.007290376</span></code></pre></div>
+<span class="co">#&gt; [1] 0.518785</span></code></pre></div>
 <p>The function <code>LD</code> is not efficient for comparisons among a large number of loci. For this purpose, we can use the funcion <code>LD_mult</code>, which takes as main arguments a numeric matrix <code>X</code> with haplotype/genotype data and another matrix <code>matr</code>, which specifies the pairs of loci for which LD should be computed. We can set up the matrix <code>matr</code> by hand or use one of the supplied assistant functions (<code>comb_all</code>, <code>comb_adj</code>, <code>comb_nearest</code>, <code>comb_nearest_k</code>, <code>comb_flank</code>, <code>comb_wind</code> or <code>comb_sliding</code>). For instance, if we want to compute the average LD (<span class="math inline">\(r^2\)</span>) for all pairs with a minimum distance of 5 cM and a maximum distance of 6 cM, we can used <code>comb_wind</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pos &lt;-<span class="st"> </span>map$pos
 matr &lt;-<span class="st"> </span><span class="kw">comb_wind</span>(<span class="dt">pos =</span> pos, <span class="dt">min_dist =</span> <span class="dv">5</span>, <span class="dt">max_dist =</span> <span class="dv">6</span>)

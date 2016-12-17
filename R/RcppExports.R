@@ -5,6 +5,10 @@
     .Call('LDtools_comb_wind', PACKAGE = 'LDtools', pos, min_dist, max_dist)
 }
 
+.comb_wind_sets <- function(indices_a, indices_b, pos_a, pos_b, min_dist, max_dist) {
+    .Call('LDtools_comb_wind_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b, min_dist, max_dist)
+}
+
 .comb_adj <- function(pos) {
     .Call('LDtools_comb_adj', PACKAGE = 'LDtools', pos)
 }
@@ -13,16 +17,20 @@
     .Call('LDtools_comb_all', PACKAGE = 'LDtools', pos)
 }
 
-.comb_flank <- function(indices, indices2, pos, pos2) {
-    .Call('LDtools_comb_flank', PACKAGE = 'LDtools', indices, indices2, pos, pos2)
+.comb_flank_sets <- function(indices_a, indices_b, pos_a, pos_b) {
+    .Call('LDtools_comb_flank_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b)
 }
 
-.comb_nearest_k <- function(indices, indices2, pos, pos2, k) {
-    .Call('LDtools_comb_nearest_k', PACKAGE = 'LDtools', indices, indices2, pos, pos2, k)
+.comb_nearest_k_sets <- function(indices_a, indices_b, pos_a, pos_b, k) {
+    .Call('LDtools_comb_nearest_k_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b, k)
 }
 
 .comb_sliding <- function(pos, start, width, advance) {
     .Call('LDtools_comb_sliding', PACKAGE = 'LDtools', pos, start, width, advance)
+}
+
+.comb_sliding_set <- function(indices_a, indices_b, pos_a, pos_b, start, width, advance) {
+    .Call('LDtools_comb_sliding_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b, start, width, advance)
 }
 
 .index_geq <- function(x, y) {

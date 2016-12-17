@@ -1,10 +1,30 @@
+
+library(LDtools)
+n <- 10L
+indices <- seq_len(n)
+pos <- sort(runif(n))
+ix <- sort(sample(indices, size = n%/%2))
+indices_a <- indices[ix]
+indices_b <- indices[-ix]
+pos_a <- pos[ix]
+pos_b <- pos[-ix]
+min_dist = 0
+max_dist = 10
+comb_wind_sets(indices_a, indices_b, pos_a, pos_b,
+               min_dist, max_dist)
+
+.comb_wind_sets(indices_a = indices_a, indices_b = indices_b,
+                pos_a = pos_a, pos_b = pos_b,
+                min_dist = min_dist, max_dist = max_dist)
+
+.comb_wind(pos_a, min_dist, max_dist)
+
 # some stuff to mess
 n <- 100
 m <- 1000
 X <- matrix(sample(c(0, 1), size = n * m, replace = TRUE), nrow = n)
 p <- colMeans(X)
 
-print('you are a fool')
 
 ##############################
 n <- 100
