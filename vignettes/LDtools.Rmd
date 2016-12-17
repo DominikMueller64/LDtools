@@ -65,9 +65,9 @@ LD(x = X[, 1], y = X[, 2], is_phased = TRUE, any_na = FALSE)
 
 The output of `LD` is a list with elements `n` (number of observations used to compute LD), `D`, `Dprime` and `r` as defined above, as well as `chi2` (Chi-Square test statistic) and `pval` (associated p-value) of an independency test between both loci. If any of the loci is monomorphic, the function returns `NaN` for the statistics. The argument to `is_phased` is `TRUE`, as we are dealing now with phased data.
 
-To demonstrate the computation for unphased genotypic data, we simulate two loci with the function `gen_geno`, which is only there for testing purposes. We then subsequently translate these from a character coding to numeric coding with `transform_geno`.
+To demonstrate the computation for unphased genotypic data, we simulate two loci with the function `.gen_geno`, which is only there for testing purposes. We then subsequently translate these from a character coding to numeric coding with `transform_geno`.
 ```{r}
-tmp <- gen_geno(n = 20L, m = 2L) %>% transform_geno()
+tmp <- .gen_geno(n = 20L, m = 2L) %>% transform_geno()
 LD(x = tmp$geno[, 1], y = tmp$geno[, 2], is_phased = FALSE, any_na = TRUE)
 ```
 

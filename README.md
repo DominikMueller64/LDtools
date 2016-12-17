@@ -1,5 +1,6 @@
 # LDtools
 [![Build Status](https://travis-ci.org/DominikMueller64/LDtools.svg?branch=master)](https://travis-ci.org/DominikMueller64/LDtools)
+[![codecov](https://codecov.io/gh/DominikMueller64/LDtools/branch/master/graph/badge.svg)](https://codecov.io/gh/DominikMueller64/LDtools)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
 
