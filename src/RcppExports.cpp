@@ -6,80 +6,6 @@
 
 using namespace Rcpp;
 
-// center_matrix
-void center_matrix(arma::mat& X, const arma::vec& center);
-RcppExport SEXP LDtools_center_matrix(SEXP XSEXP, SEXP centerSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type center(centerSEXP);
-    center_matrix(X, center);
-    return R_NilValue;
-END_RCPP
-}
-// LD
-Rcpp::List LD(const arma::vec& x, const arma::vec& y, const double px, const double py, const bool any_na, const bool is_phased, const bool r_only);
-RcppExport SEXP LDtools_LD(SEXP xSEXP, SEXP ySEXP, SEXP pxSEXP, SEXP pySEXP, SEXP any_naSEXP, SEXP is_phasedSEXP, SEXP r_onlySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< const double >::type px(pxSEXP);
-    Rcpp::traits::input_parameter< const double >::type py(pySEXP);
-    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
-    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
-    Rcpp::traits::input_parameter< const bool >::type r_only(r_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(LD(x, y, px, py, any_na, is_phased, r_only));
-    return rcpp_result_gen;
-END_RCPP
-}
-// LD_mult
-DataFrame LD_mult(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
-RcppExport SEXP LDtools_LD_mult(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
-    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
-    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
-    rcpp_result_gen = Rcpp::wrap(LD_mult(X, p, matr, is_phased, any_na));
-    return rcpp_result_gen;
-END_RCPP
-}
-// LD_mult_r_dev
-Rcpp::DataFrame LD_mult_r_dev(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na, const bool cache);
-RcppExport SEXP LDtools_LD_mult_r_dev(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP, SEXP cacheSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
-    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
-    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
-    Rcpp::traits::input_parameter< const bool >::type cache(cacheSEXP);
-    rcpp_result_gen = Rcpp::wrap(LD_mult_r_dev(X, p, matr, is_phased, any_na, cache));
-    return rcpp_result_gen;
-END_RCPP
-}
-// LD_mult_r
-Rcpp::DataFrame LD_mult_r(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
-RcppExport SEXP LDtools_LD_mult_r(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
-    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
-    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
-    rcpp_result_gen = Rcpp::wrap(LD_mult_r(X, p, matr, is_phased, any_na));
-    return rcpp_result_gen;
-END_RCPP
-}
 // comb_wind
 arma::mat comb_wind(const arma::vec& pos, const double min_dist, const double max_dist);
 RcppExport SEXP LDtools_comb_wind(SEXP posSEXP, SEXP min_distSEXP, SEXP max_distSEXP) {
@@ -191,6 +117,80 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const double >::type y(ySEXP);
     rcpp_result_gen = Rcpp::wrap(find_closest(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// center_matrix
+void center_matrix(arma::mat& X, const arma::vec& center);
+RcppExport SEXP LDtools_center_matrix(SEXP XSEXP, SEXP centerSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type center(centerSEXP);
+    center_matrix(X, center);
+    return R_NilValue;
+END_RCPP
+}
+// LD
+Rcpp::List LD(const arma::vec& x, const arma::vec& y, const double px, const double py, const bool any_na, const bool is_phased, const bool r_only);
+RcppExport SEXP LDtools_LD(SEXP xSEXP, SEXP ySEXP, SEXP pxSEXP, SEXP pySEXP, SEXP any_naSEXP, SEXP is_phasedSEXP, SEXP r_onlySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const double >::type px(pxSEXP);
+    Rcpp::traits::input_parameter< const double >::type py(pySEXP);
+    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
+    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
+    Rcpp::traits::input_parameter< const bool >::type r_only(r_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(LD(x, y, px, py, any_na, is_phased, r_only));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LD_mult
+DataFrame LD_mult(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
+RcppExport SEXP LDtools_LD_mult(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
+    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
+    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
+    rcpp_result_gen = Rcpp::wrap(LD_mult(X, p, matr, is_phased, any_na));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LD_mult_r_dev
+Rcpp::DataFrame LD_mult_r_dev(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na, const bool cache);
+RcppExport SEXP LDtools_LD_mult_r_dev(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP, SEXP cacheSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
+    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
+    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
+    Rcpp::traits::input_parameter< const bool >::type cache(cacheSEXP);
+    rcpp_result_gen = Rcpp::wrap(LD_mult_r_dev(X, p, matr, is_phased, any_na, cache));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LD_mult_r
+Rcpp::DataFrame LD_mult_r(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
+RcppExport SEXP LDtools_LD_mult_r(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type matr(matrSEXP);
+    Rcpp::traits::input_parameter< const bool >::type is_phased(is_phasedSEXP);
+    Rcpp::traits::input_parameter< const bool >::type any_na(any_naSEXP);
+    rcpp_result_gen = Rcpp::wrap(LD_mult_r(X, p, matr, is_phased, any_na));
     return rcpp_result_gen;
 END_RCPP
 }

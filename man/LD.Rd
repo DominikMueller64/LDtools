@@ -113,7 +113,7 @@ data('population', package = 'LDtools')
 LD(x = X[, 1], y = X[, 2], is_phased = TRUE, any_na = FALSE)
 
 # unphased data
-tmp <- transform_geno(gen_geno(n = 20L, m = 2L))
+tmp <- transform_geno(.gen_geno(n = 20L, m = 2L))
 LD(x = tmp$geno[, 1], y = tmp$geno[, 2], is_phased = FALSE,
 any_na = TRUE)
 

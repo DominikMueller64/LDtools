@@ -4,7 +4,7 @@
 \alias{transform_geno}
 \title{Transform genotypes}
 \usage{
-transform_geno(geno, sep = "/")
+transform_geno(geno, sep = "/", check = TRUE)
 }
 \arguments{
 \item{geno}{A character matrix containing the genotypes.}
@@ -20,10 +20,12 @@ Transform genotypes from two-letter coding to numeric
 coding.
 }
 \details{
-Recoding is performed based on the major allele at the respective
-locus, i.e., if for instance the major allele is "A", the recoded
-genotypes of "A/A", "A/B", "B/A" and "B/B" will be 2, 1, 1, 0, given
-\code{sep = "/"}.
+A genotype must consist of a sequence of three characters,
+where the mittle character is the seperator as specified in
+\code{sep}. Recoding is performed based on the major allele at the
+respective locus, i.e., if for instance the major allele is "A",
+the recoded genotypes of "A/A", "A/B", "B/A" and "B/B" will be,
+2, 1, 1, 0, given \code{sep = "/"}.
 }
 \examples{
 geno <- structure(c("A/G", "G/A", "A/A", NA, "A/A", "G/G", NA, "G/G", 
