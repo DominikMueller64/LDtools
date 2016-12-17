@@ -22,6 +22,7 @@
 #' 
 #' @param geno A character matrix containing the genotypes.
 #' @param sep A character string use to split the genotypes in \code{geno}.
+#' @param check Should checks be performed?
 #'
 #' @return A numeric matrix of the same dimensions as geno containing the
 #' recoded genotypes.
