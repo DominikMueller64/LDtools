@@ -125,7 +125,7 @@ m <- 10L
 n <- 1000L
 prob_na <- 0.2
 
-geno <- gen_geno(nucleotides, n, m, prob_na)
+geno <- .gen_geno(nucleotides, n, m, prob_na)
 
 new_geno <- data.frame(lapply(as.data.frame(geno), genetics::as.genotype))
 tmp <- transform_geno(geno, sep  = '/')
