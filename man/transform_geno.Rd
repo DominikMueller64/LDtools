@@ -10,6 +10,8 @@ transform_geno(geno, sep = "/", check = TRUE)
 \item{geno}{A character matrix containing the genotypes.}
 
 \item{sep}{A character string use to split the genotypes in \code{geno}.}
+
+\item{check}{Should checks be performed?}
 }
 \value{
 A numeric matrix of the same dimensions as geno containing the
