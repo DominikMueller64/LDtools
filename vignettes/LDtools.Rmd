@@ -98,11 +98,11 @@ dat <- LD_mult(X, matr, pos)
 dat <- by(data = dat, INDICES = factor(dat$block),
           FUN = function(x) {
           data.frame(pos = mean(c(x$pos1, x$pos2)),
-                     r = mean(x$r, na.rm = TRUE))
+                     r2 = mean(x$r2, na.rm = TRUE))
           },
           simplify = FALSE) %>% do.call(what = rbind)
 
-with(dat, plot(pos, r, type = 'l'))
+with(dat, plot(pos, r2, type = 'l'))
 ```
 
 As a side not, `LD_mult` internally caches the results of all computation within
@@ -115,7 +115,7 @@ The package also contains a function `LP` for computing linkage phase similarity
 mid <- nrow(X) %/% 2L
 X1 <- X[1L:mid, , drop = FALSE]
 X2 <- X[(mid + 1L):nrow(X), , drop = FALSE]
-min_dist <- seq(0, floor(max(pos) / 2), by = 1)
+min_dist <- seq(sqrt(.Machine$double.eps), floor(max(pos) / 2), by = 1)
 max_dist <- min_dist + 1
 
 dat <- LP(X1, X2, pos, min_dist, max_dist, method = 'correlation')

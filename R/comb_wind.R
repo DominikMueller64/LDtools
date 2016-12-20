@@ -1,8 +1,8 @@
 ##' @title Combinations among loci with minimum and maximum distance.
 ##' @description Combinations among loci with minimum and maximum distance.
 ##' @param pos A numeric vector. Increasingly sorted, contains the positions of loci.
-##' @param min_dist A double. Minimum distance.
-##' @param max_dist A double. Maximum distance.
+##' @param min_dist A numeric vector. Minimum distance. Each entry must be positive.
+##' @param max_dist A numeric vector. Maximum distance.
 ##' @return A numeric matrix.
 ##' @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 ##' @examples
