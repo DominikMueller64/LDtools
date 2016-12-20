@@ -46,7 +46,7 @@
 #' mid <- nrow(X) %/% 2L
 #' X1 <- X[1L:mid, , drop = FALSE]
 #' X2 <- X[(mid + 1L):nrow(X), , drop = FALSE]
-#' min_dist <- seq(0, floor(max(pos) / 2), by = 1)
+#' min_dist <- seq(sqrt(.Machine$double.eps), floor(max(pos) / 2), by = 1)
 #' max_dist <- min_dist + 1
 #' 
 #' dat <- LP(X1, X2, pos, min_dist, max_dist, method = 'correlation')
