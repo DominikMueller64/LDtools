@@ -28,9 +28,9 @@ comb_sliding(pos, start, width, advance)
 \arguments{
 \item{pos}{An increasingly sorted numeric vector. The positions of the loci.}
 
-\item{min_dist}{A double. The minimum distance between loci.}
+\item{min_dist}{A numeric vector. The minimum distances between loci. Each entry must be positive.}
 
-\item{max_dist}{A double. The maximum distance between loci.}
+\item{max_dist}{A numeric vector. The maximum distances between loci.}
 
 \item{indices}{An integer vector. A vector with the indices of the loci.}
 
