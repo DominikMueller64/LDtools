@@ -9,9 +9,9 @@ comb_wind(pos, min_dist, max_dist)
 \arguments{
 \item{pos}{A numeric vector. Increasingly sorted, contains the positions of loci.}
 
-\item{min_dist}{A double. Minimum distance.}
+\item{min_dist}{A numeric vector. Minimum distance. Each entry must be positive.}
 
-\item{max_dist}{A double. Maximum distance.}
+\item{max_dist}{A numeric vector. Maximum distance.}
 }
 \value{
 A numeric matrix.

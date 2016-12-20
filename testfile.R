@@ -1,5 +1,5 @@
 
-library(LDtools)
+library('LDtools')
 n <- 10L
 indices <- seq_len(n)
 pos <- sort(runif(n))
@@ -17,6 +17,7 @@ comb_wind_sets(indices_a, indices_b, pos_a, pos_b,
                 pos_a = pos_a, pos_b = pos_b,
                 min_dist = min_dist, max_dist = max_dist)
 
+devtools::build()
 
 data('population', package = 'LDtools')
 ls(envir=.GlobalEnv)
