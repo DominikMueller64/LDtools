@@ -17,7 +17,39 @@ comb_wind_sets(indices_a, indices_b, pos_a, pos_b,
                 pos_a = pos_a, pos_b = pos_b,
                 min_dist = min_dist, max_dist = max_dist)
 
-.comb_wind(pos_a, min_dist, max_dist)
+
+data('population', package = 'LDtools')
+ls(envir=.GlobalEnv)
+map 
+str(X)
+
+comb <- comb_wind(pos = map$pos, min_dist = 50, max_dist = 51)
+str(comb)
+microbenchmark::microbenchmark(times = 1L,
+LD_frame <- LD_mult(X = X, matr = comb, pos = map$pos),
+{v <- numeric(nrow(comb))
+for (i in seq_len(nrow(comb))) {
+  v[i] <- cor(X[,comb[i, 1]], X[,comb[i, 2]])^2
+  print(i)
+}}
+)
+mean(LD_frame$r2, na.rm = TRUE)
+mean(v, na.rm = TRUE)
+
+library('magrittr')
+min_dist <- seq(from = 1e-6, to = 99, by = 1)
+comb <- comb_wind(pos = map$pos, min_dist = min_dist, max_dist = min_dist + 0.5)
+dat <- LD_mult(X = X, matr = comb, pos = map$pos)
+head(dat)
+
+dat <- by(data = dat, INDICES = factor(dat$block),
+          FUN = function(x) {
+          data.frame(pos = mean(x$dist, na.rm = TRUE),
+                     r = mean(x$r2, na.rm = TRUE))
+          },
+          simplify = FALSE) %>% do.call(what = rbind)
+
+with(dat, plot(pos, r, type = 'l'))
 
 # some stuff to mess
 n <- 100
