@@ -118,13 +118,12 @@ LD(x = tmp$geno[, 1], y = tmp$geno[, 2], is_phased = FALSE,
 any_na = TRUE)
 
 }
+\seealso{
+{ \code{\link{transform_geno}}, \code{\link{LD_mult}}  }
+}
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de})
 The documentation is adapted from the \link[genetics]{LD} function of the 
 \href{https://cran.r-project.org/web/packages/genetics/index.html}{genetics} 
 package by \href{https://sites.google.com/a/warnes.net/resume/}{Gregory Warnes}.
 }
-\seealso{
-{ \code{\link{transform_geno}}, \code{\link{LD_mult}}  }
-}
-

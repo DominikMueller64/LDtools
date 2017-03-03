@@ -27,4 +27,3 @@ NULL
 \author{
 dominik
 }
-

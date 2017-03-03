@@ -9,4 +9,3 @@
 \description{
 The haplotype data of the simulated population
 }
-

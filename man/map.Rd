@@ -10,4 +10,3 @@ identifier of the locus, \code{pos} gives the genetic position and
 \description{
 The genetic map of the chromsome.
 }
-

@@ -68,12 +68,11 @@ with(dat, plot(pos, r, type = 'l'))
 }
  
 }
-\author{
-Dominik Mueller (\email{dominikmueller64@yahoo.de})
-}
 \seealso{
 { \code{\link{transform_geno}}, \code{\link{LD}},
 \code{\link{comb_all}}, \code{\link{comb_adj}}, \code{\link{comb_nearest}},
 \code{\link{comb_wind}}, \code{\link{comb_sliding}}. }
 }
-
+\author{
+Dominik Mueller (\email{dominikmueller64@yahoo.de})
+}

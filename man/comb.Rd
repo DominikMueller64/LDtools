@@ -2,13 +2,13 @@
 % Please edit documentation in R/comb.R
 \name{comb}
 \alias{comb}
+\alias{comb_wind}
 \alias{comb_adj}
 \alias{comb_all}
-\alias{comb_flank}
 \alias{comb_nearest}
 \alias{comb_nearest_k}
+\alias{comb_flank}
 \alias{comb_sliding}
-\alias{comb_wind}
 \title{Combinations of loci.}
 \usage{
 comb_wind(pos, min_dist, max_dist)
@@ -107,10 +107,9 @@ comb_nearest_k(indices1, indices2, pos, pos2, 3)
 comb_flank(indices1, indices2, pos, pos2)
 comb_sliding(pos, 0, 0.2, 0.1)
 }
-\author{
-Dominik Mueller (\email{dominikmueller64@yahoo.de})
-}
 \seealso{
 \code{\link{LD_mult}}
 }
-
+\author{
+Dominik Mueller (\email{dominikmueller64@yahoo.de})
+}

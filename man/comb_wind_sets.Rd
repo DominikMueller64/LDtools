@@ -31,4 +31,3 @@ NULL
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de})
 }
-

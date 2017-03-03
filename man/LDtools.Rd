@@ -14,6 +14,6 @@ disequilibrium (LD) between biallelic marker loci from either phased
 All performance-critical parts are implemented in C++.
 }
 \section{Functions}{
-
+NA
 }
 

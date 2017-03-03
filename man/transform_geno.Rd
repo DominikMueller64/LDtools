@@ -39,4 +39,3 @@ transform_geno(geno, sep = '/')
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de})
 }
-

@@ -25,4 +25,3 @@ comb_wind(pos, min_dist = c(0.1, 0.3, 0.8), max_dist = c(0.2, 0.7, 0.9))
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de})
 }
-

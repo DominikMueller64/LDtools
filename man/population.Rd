@@ -11,4 +11,3 @@ genetic map of the chromosome.}
 The data set contains a simulated population
 (one chromosome) for illustration LD computations.
 }
-

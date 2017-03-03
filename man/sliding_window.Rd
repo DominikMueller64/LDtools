@@ -52,4 +52,3 @@ for (i in seq_along(width)) {
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de}).
 }
-
