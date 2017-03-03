@@ -102,7 +102,7 @@ LP <- function(X1, X2, pos, min_dist, max_dist,
     n[block] <- length(r1s)
     if (method == 'correlation') {
       lps[block] <- suppressWarnings(stats::cor(r1s, r2s, method = 'pearson'))
-    } else if (method == 'cosine_similary') {
+    } else if (method == 'cosine_similarity') {
       lps[block] <- drop(crossprod(r1s, r2s) / sqrt(crossprod(r1s) * crossprod(r2s)))
     } else if (method == 'sign_match') {
       lps[block] <- mean(sign(r1s) == sign(r2s))
