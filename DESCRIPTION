@@ -1,7 +1,7 @@
 Package: LDtools
 Title: Tools for Linkage Disequilibrium Analysis
 Version: 0.0.0
-Author: Dominik Mueller
+Author: Author: Dominik Müller [aut, cre]
 Maintainer: Dominik Mueller <Dominik_Mueller@uni-hohenheim.de>
 Description: Tools for Linkage Disequilibrium Analysis.
 Depends:
@@ -22,6 +22,5 @@ Suggests:
     rmarkdown,
     magrittr
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 SystemRequirements: C++11
-Author: Dominik Müller [aut, cre]
