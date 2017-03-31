@@ -23,8 +23,8 @@
 #' @param pos An increasingly sorted numeric vector. The positions of the loci. 
 #' @param pos2 An increasingly numeric vector. The positions of a second set of loci. 
 #' 
-#' @param min_dist A double. The minimum distance between loci.
-#' @param max_dist A double. The maximum distance between loci.
+#' @param min_dist A numeric vector. The minimum distances between loci. Each entry must be positive.
+#' @param max_dist A numeric vector. The maximum distances between loci.
 #' 
 #' @param indices An integer vector. A vector with the indices of the loci.
 #' @param indices2 An integer vector. A vector with the indices of a second set
@@ -89,6 +89,9 @@ comb_wind <- function(pos, min_dist, max_dist) {
   if (!is.numeric(min_dist) || !is.numeric(max_dist) || any(min_dist >= max_dist))
     stop(paste("'min_dist' and 'max_dist' must be numeric with",
                "min_dist < max_dist for all elements."))
+
+  if (any(min_dist <= 0))
+    stop("'min_dist' cannot contain entries smaller than or equal to zero.")
   
   matr <- purrr::map2(min_dist, max_dist, ~ .comb_wind(pos, .x, .y))
   for (i in seq_along(matr)) matr[[i]][, 3L] <- i
