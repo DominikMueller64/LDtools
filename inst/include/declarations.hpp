@@ -15,18 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-int index_greater(const arma::vec& x, const double y);
-int index_geq(const arma::vec& x, const double y);
+// [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
 
-int find_closest(const arma::vec& x, const double y);
+R_xlen_t index_greater(const arma::vec& x, const double y);
 
-double optimum_pxy(const arma::imat& n3x3, 
-                   const double px, 
+R_xlen_t index_geq(const arma::vec& x, const double y);
+
+R_xlen_t find_closest(const arma::vec& x, const double y);
+
+double optimum_pxy(const arma::imat& n3x3,
+                   const double px,
                    const double py,
-                   const double lower,
+                  const double lower,
                    const double upper);
-  
-
 
 arma::imat get_counts(const arma::vec& x,
                       const arma::vec& y);

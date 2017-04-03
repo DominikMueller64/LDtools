@@ -1,12 +1,11 @@
 # LDtools
 [![Build Status](https://travis-ci.org/DominikMueller64/LDtools.svg?branch=master)](https://travis-ci.org/DominikMueller64/LDtools)
-[![codecov](https://codecov.io/gh/DominikMueller64/LDtools/branch/master/graph/badge.svg)](https://codecov.io/gh/DominikMueller64/LDtools)
-[![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
-[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/LDtools)](https://cran.r-project.org/package=LDtools)
+[![Coverage Status](https://img.shields.io/codecov/c/github/DominikMueller64/LDtools/master.svg)](https://codecov.io/github/DominikMueller64/LDtools?branch=master)
 
 ---
 
-LDtools provides functions of analysis of linkage disequilibrium and linkage
+LDtools provides functions for the analysis of linkage disequilibrium and linkage
 phases for haplotype (phased) and genotype (unphased) data.
 
 ---

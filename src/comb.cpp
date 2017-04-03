@@ -21,7 +21,7 @@
 using namespace Rcpp;
 using namespace arma;
 
-#include "headers.h"
+#include "../inst/include/declarations.hpp"
 
 // Convert std::list to Rcpp::List
 // @description Convert a std::list with arbitrary content to
@@ -32,10 +32,10 @@ using namespace arma;
 template<typename T>
 Rcpp::List stdlist2List(T& stdlist)
 {
-  const int n = stdlist.size();
+  const std::size_t n = stdlist.size();
   Rcpp::List list(n);
   typename T::iterator iter;
-  int i;
+  std::size_t i;
   for (iter = stdlist.begin(), i = 0; iter != stdlist.end(); ++iter, ++i) {
     list[i] = *iter;
   }
@@ -48,22 +48,22 @@ Rcpp::List stdlist2List(T& stdlist)
 // @param stdlist A std::list.
 // @return A arma::mat.
 // @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
-arma::mat stdlist2mat(const std::list< arma::mat >& stdlist)
+arma::mat stdlist2mat(const std::list<arma::mat>& stdlist)
 {
-  std::list< arma::mat >::const_iterator it;
-  int len = 0;
+  std::list<arma::mat>::const_iterator it;
+  R_xlen_t len = 0;
   arma::mat tmp;
   for (it = stdlist.begin(); it != stdlist.end(); ++it) {
     tmp = *it;
     len += tmp.n_rows;
   }
   arma::mat matr(len, tmp.n_cols);
-  
-  int ct = 0;
+
+  R_xlen_t ct = 0;
   for (it = stdlist.begin(); it != stdlist.end(); ++it) {
     tmp = *it;
-    int n = tmp.n_rows;
-    for (int i = 0; i < n; ++i, ++ct) {
+    R_xlen_t n = tmp.n_rows;
+    for (R_xlen_t i = 0; i < n; ++i, ++ct) {
       matr.row(ct) = tmp.row(i);
     }
   }
@@ -72,21 +72,21 @@ arma::mat stdlist2mat(const std::list< arma::mat >& stdlist)
 
 // Rcpp::NumericMatrix stdlist2Matrix(const std::list< Rcpp::NumericMatrix >& stdlist)
 // {
-//   // const int n = stdlist.size();
+//   // const R_xlen_t n = stdlist.size();
 //   std::list< Rcpp::NumericMatrix >::const_iterator it;
-//   int len = 0;
+//   R_xlen_t len = 0;
 //   Rcpp::NumericMatrix tmp;
 //   for (it = stdlist.begin(); it != stdlist.end(); ++it) {
 //     tmp = *it;
 //     len += tmp.nrow();
 //   }
 //   Rcpp::NumericMatrix matr(len, tmp.ncol());
-//   
-//   int ct = 0;
+//
+//   R_xlen_t ct = 0;
 //   for (it = stdlist.begin(); it != stdlist.end(); ++it) {
 //     tmp = *it;
-//     int n = tmp.nrow();
-//     for (int i = 0; i < n; ++i, ++ct) {
+//     R_xlen_t n = tmp.nrow();
+//     for (R_xlen_t i = 0; i < n; ++i, ++ct) {
 //       matr(ct, _) = tmp(i, _);
 //     }
 //   }
@@ -95,35 +95,35 @@ arma::mat stdlist2mat(const std::list< arma::mat >& stdlist)
 
 
 // Compute all combinations under spatial constrictions.
-// 
+//
 // @description Compute all combinations of loci with a given minimum
 // and maximum distance.
-// 
+//
 // @param pos A incresingly sorted numeric vector with positions.
 // @param min_dist A double giving the minimum distance between two loci.
 // @param max_dist A double giving the maximim distance between two loci.
-// 
+//
 // @return A list. Each element is a matrix that refers to a single locus and
 // specifies all combinations of this locus with other loci fulfilling the
 // criteria.
-// 
+//
 // @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
-// 
+//
 // [[Rcpp::export(".comb_wind")]]
 arma::mat comb_wind(const arma::vec& pos,
                     const double min_dist,
                     const double max_dist)
 {
-  const int n = pos.size();
-  std::list < arma::mat > list;
-  int len = 0;
-  for (int i = 0; i < n; ++i) {
-    int ix1 = index_geq(pos, pos(i) + min_dist);
-    int ix2 = index_geq(pos, pos(i) + max_dist) - 1;
+  const R_xlen_t n = pos.size();
+  std::list<arma::mat> list;
+  R_xlen_t len = 0;
+  for (R_xlen_t i = 0; i < n; ++i) {
+    R_xlen_t ix1 = index_geq(pos, pos(i) + min_dist);
+    R_xlen_t ix2 = index_geq(pos, pos(i) + max_dist) - 1;
     if (ix1 <= ix2) {
       arma::mat matr(ix2 - ix1 + 1, 3);
-      int ct = 0;
-      for (int j = ix1; j < ix2 + 1; ++j, ++ct) {
+      R_xlen_t ct = 0;
+      for (R_xlen_t j = ix1; j < ix2 + 1; ++j, ++ct) {
         matr(ct, 0) = i + 1;
         matr(ct, 1) = j + 1;
         matr(ct, 2) = 1;
@@ -143,19 +143,19 @@ arma::mat comb_wind_sets(const arma::ivec& indices_a,
                          const double min_dist,
                          const double max_dist)
 {
-  Rcpp::Rcout << "motherfucker" << std::endl;
-  const int n_a = pos_a.size();
-  std::list < arma::mat > list;
-  int len = 0;
-  for (int i = 0; i < n_a; ++i) {
-    int ix1 = index_geq(pos_b, pos_a(i) + min_dist);
-    int ix2 = index_geq(pos_b, pos_a(i) + max_dist) - 1;
+  const R_xlen_t n_a = pos_a.size();
+  std::list<arma::mat> list;
+  R_xlen_t len = 0;
+  for (R_xlen_t i = 0; i < n_a; ++i) {
+    R_xlen_t ix1 = index_geq(pos_b, pos_a(i) + min_dist);
+    R_xlen_t ix2 = index_geq(pos_b, pos_a(i) + max_dist) - 1;
+    // Rcpp::Rcout << ix1 << " " << ix2 << std::endl;
     if (ix1 <= ix2) {
       arma::mat matr(ix2 - ix1 + 1, 3);
-      int ct = 0;
-      for (int j = ix1; j < ix2 + 1; ++j, ++ct) {
-        matr(ct, 0) = indices_a(i + 1);
-        matr(ct, 1) = indices_b(j + 1);
+      R_xlen_t ct = 0;
+      for (R_xlen_t j = ix1; j < ix2 + 1; ++j, ++ct) {
+        matr(ct, 0) = indices_a(i);
+        matr(ct, 1) = indices_b(j);
         matr(ct, 2) = 1;
       }
       len += ct;
@@ -166,23 +166,23 @@ arma::mat comb_wind_sets(const arma::ivec& indices_a,
 }
 
 // Compute all combinations of adjacent loci.
-// 
+//
 // @description Compute all combination of loci with adjacent genetic
 // positions.
-// 
+//
 // @param n A integer. The number of loci.
-// 
+//
 // @return A List. The list contains as its single element a matrix with all
 // the combinations of adjacent loci.
-// 
+//
 // @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 //
 // [[Rcpp::export(".comb_adj")]]
 arma::mat comb_adj(const arma::vec& pos)
 {
-  int n = pos.n_elem;
+  R_xlen_t n = pos.size();
   arma::mat matr(n - 1, 3);
-  for (int i = 0; i < n - 1; ++i) {
+  for (R_xlen_t i = 0; i < n - 1; ++i) {
     matr(i, 0) = i + 1;
     matr(i, 1) = i + 2;
     matr(i, 2) = 1;
@@ -191,25 +191,25 @@ arma::mat comb_adj(const arma::vec& pos)
 }
 
 // Compute all combinations of loci.
-// 
+//
 // @description Compute all combination of loci.
-// 
+//
 // @param n A integer. The number of loci.
-// 
+//
 // @return A List. The list contains as its single element a matrix with all
 // the combinations of loci.
-// 
+//
 // @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
-// 
+//
 // [[Rcpp::export(".comb_all")]]
 arma::mat comb_all(const arma::vec& pos)
 {
-  int n = pos.n_elem;
-  int len = (int) n * (n - 1) / 2;
+  R_xlen_t n = pos.size();
+  R_xlen_t len = (R_xlen_t) n * (n - 1) / 2;
   arma::mat matr(len, 3);
-  int ct = 0;
-  for (int i = 0; i < n - 1; ++i) {
-    for (int j = i + 1; j < n; ++j, ++ct) {
+  R_xlen_t ct = 0;
+  for (R_xlen_t i = 0; i < n - 1; ++i) {
+    for (R_xlen_t j = i + 1; j < n; ++j, ++ct) {
       matr(ct, 0) = i + 1;
       matr(ct, 1) = j + 1;
       matr(ct, 2) = 1;
@@ -218,19 +218,20 @@ arma::mat comb_all(const arma::vec& pos)
   return matr;
 }
 
+// [[Rcpp::export(".comb_all_sets")]]
 arma::mat comb_all_sets(const arma::ivec& indices_a,
                         const arma::ivec& indices_b,
                         const arma::vec& pos_a,
                         const arma::vec& pos_b)
 {
-  int n_a = pos_a.n_elem;
-  int n_b = pos_b.n_elem;
+  R_xlen_t n_a = pos_a.size();
+  R_xlen_t n_b = pos_b.size();
   arma::mat matr(n_a * n_b, 3);
-  int ct = 0;
-  for (int i = 0; i < n_a - 1; ++i) {
-    for (int j = 0; j < n_b; ++j, ++ct) {
-      matr(ct, 0) = i + 1;
-      matr(ct, 1) = j + 1;
+  R_xlen_t ct = 0;
+  for(R_xlen_t i = 0; i < n_a; ++i) {
+    for(R_xlen_t j = 0; j < n_b; ++j, ++ct) {
+      matr(ct, 0) = indices_a[i];
+      matr(ct, 1) = indices_b[j];
       matr(ct, 2) = 1;
     }
   }
@@ -255,7 +256,7 @@ arma::mat comb_all_sets(const arma::ivec& indices_a,
 // //                              const arma::vec& pos2)
 // // {
 // //   // std::sort(pos1.begin(), pos1.end(), std::greater<double>());
-// //   int n = pos.n_elem;
+// //   int n = pos.size();
 // //   arma::mat matr(n, 3);
 // //   for (int i = 0; i < n; ++i) {
 // //     int j = find_closest(pos2, pos(i));
@@ -272,14 +273,14 @@ arma::mat comb_flank_sets(const arma::ivec& indices_a,
                           const arma::ivec& indices_b,
                           const arma::vec& pos_a,
                           const arma::vec& pos_b)
-  
+
 {
-  int n_a = pos_a.n_elem;
-  int n_b = pos_b.n_elem;
+  R_xlen_t n_a = pos_a.size();
+  R_xlen_t n_b = pos_b.size();
   std::list< arma::mat > stdlist(n_a);
-  for (int i = 0; i < n_a; ++i) {
-    int ixr = index_geq(pos_b, pos_a(i));
-    int ixl = ixr - 1;
+  for (R_xlen_t i = 0; i < n_a; ++i) {
+    R_xlen_t ixr = index_geq(pos_b, pos_a(i));
+    R_xlen_t ixl = ixr - 1;
     if (ixl > 0) {
       arma::mat matr(1, 3);
       matr(0, 0) = indices_a(i);
@@ -299,25 +300,25 @@ arma::mat comb_flank_sets(const arma::ivec& indices_a,
 }
 
 // Compute all combinations between closest loci.
-// 
+//
 // @description Compute all combination between a set of loci and its closest
 // pendants in another set.
-// 
+//
 // @param indices_a A integer vector. A vector with the indices of the first
 // set of loci.
 // @param indices_b A integer vector. A vector with the indices of the second
 // set of loci.
 // @param pos1 A numeric vector. The positions of the first set of loci.
 // @param pos2 A numeric vector. The positions of the second set of loci.
-// 
+//
 // @return A List. Each row of the contained matrix refers to a locus of the first set of
 // loci and specifies the pair of this locus and the locus
 // closest to it from the second set of loci.
-// 
+//
 // @details Vectors \code{pos1} and \code{pos2} must be increasingly sorted.
 // This function is usefull if for a known set of QTL the LD between QTL and
 // their closest markers should be computed.
-// 
+//
 // @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 //
 // [[Rcpp::export(".comb_nearest_k_sets")]]
@@ -327,15 +328,15 @@ arma::mat comb_nearest_k_sets(const arma::ivec& indices_a,
                               const arma::vec& pos_b,
                               const int k)
 {
-  int n = pos_a.n_elem;
-  int n2 = pos_b.n_elem;
+  R_xlen_t n = pos_a.size();
+  R_xlen_t n2 = pos_b.size();
   arma::mat matr(k * n, 3);
-  int ct = 0;
-  for (int i = 0; i < n; ++i) {
-    double p = pos_a(i);  
-    int ixr = index_geq(pos_b, p);
-    int ixl = ixr - 1;
-    for (int j = 0; j < k; ++j, ++ct) {
+  R_xlen_t ct = 0;
+  for (R_xlen_t i = 0; i < n; ++i) {
+    double p = pos_a(i);
+    R_xlen_t ixr = index_geq(pos_b, p);
+    R_xlen_t ixl = ixr - 1;
+    for (R_xlen_t j = 0; j < k; ++j, ++ct) {
       matr(ct, 0) = indices_a(i);
       if (ixl < 0) {
         matr(ct, 1) = indices_b(ixr);
@@ -353,7 +354,7 @@ arma::mat comb_nearest_k_sets(const arma::ivec& indices_a,
           ++ixr;
         }
       }
-      matr(ct, 2) = i + 1; 
+      matr(ct, 2) = i + 1;
     }
   }
   return matr;
@@ -361,17 +362,17 @@ arma::mat comb_nearest_k_sets(const arma::ivec& indices_a,
 
 
 // Compute combination of loci in a sliding window.
-// 
+//
 // @description Compute all combinations of loci in a moving sliding
 // window.
-// 
+//
 // @param pos An increasingly sorted numeric vector containing the genetic
 // position of the loci.
 //
 // @param start A double, specifyin where to start with the sliding window.
 // @param width A double, the width of the sliding window.
 // @param advance A double, the increment of the sliding window.
-// 
+//
 // @return A List. Contained matrices refer to individual windows where all
 // possible combination of loci falling into this window are specified.
 //
@@ -383,28 +384,28 @@ arma::mat comb_sliding(const arma::vec& pos,
                        const double width,
                        const double advance)
 {
-  
+
   double eps = std::numeric_limits<double>::epsilon();
-  //int n = pos.n_elem;
+  //int n = pos.size();
   double max_pos = *(pos.end() - 1);
-  int n_wind = ceil((max_pos - start - width - eps) / advance); 
+  R_xlen_t n_wind = ceil((max_pos - start - width - eps) / advance);
   std::list< arma::mat > stdlist(n_wind);
-  
-  int ix1 = 0;
-  int ix2;
+
+  R_xlen_t ix1 = 0;
+  R_xlen_t ix2;
   double begin = start;
   double end = begin + width;
-  int wind = 0;
-  int len = 0;
+  R_xlen_t wind = 0;
+  R_xlen_t len = 0;
   while (wind < n_wind && end <= max_pos) {
     ix1 = index_geq(pos, begin);
     ix2 = index_greater(pos, end) - 1;
     if (ix1 < ix2) {
-      int m = ix2 - ix1 + 1;
-      arma::mat matr((int) m * (m - 1) / 2, 3);
-      int ct = 0;
-      for (int i = ix1; i < ix2; ++i) {
-        for (int j = i + 1; j < ix2 + 1; ++j, ++ct, ++len) {
+      R_xlen_t m = ix2 - ix1 + 1;
+      arma::mat matr((R_xlen_t) m * (m - 1) / 2, 3);
+      R_xlen_t ct = 0;
+      for (R_xlen_t i = ix1; i < ix2; ++i) {
+        for (R_xlen_t j = i + 1; j < ix2 + 1; ++j, ++ct, ++len) {
           matr(ct, 0) = i + 1;
           matr(ct, 1) = j + 1;
           matr(ct, 2) = wind + 1;
@@ -412,7 +413,7 @@ arma::mat comb_sliding(const arma::vec& pos,
       }
       stdlist.push_back(matr);
       ++wind;
-    } 
+    }
     begin += advance;
     end = begin + width;
   }
@@ -429,21 +430,21 @@ arma::mat comb_sliding_sets(const arma::ivec& indices_a,
                             const double width,
                             const double advance)
 {
-  
+
   double eps = std::numeric_limits<double>::epsilon();
   double last_pos_a = *(pos_a.end() - 1);
   double last_pos_b = *(pos_b.end() - 1);
   double min_pos = std::min(last_pos_a, last_pos_b);
-  int n_wind = ceil((min_pos - start - width - eps) / advance); 
+  R_xlen_t n_wind = ceil((min_pos - start - width - eps) / advance);
   std::list< arma::mat > stdlist(n_wind);
-  
-  int ix1_a = 0;
-  int ix1_b = 0;
-  int ix2_a, ix2_b;
+
+  R_xlen_t ix1_a = 0;
+  R_xlen_t ix1_b = 0;
+  R_xlen_t ix2_a, ix2_b;
   double begin = start;
   double end = begin + width;
-  int wind = 0;
-  int len = 0;
+  R_xlen_t wind = 0;
+  R_xlen_t len = 0;
 
   while (wind < n_wind && end <= min_pos) {
     ix1_a = index_geq(pos_a, begin);
@@ -451,12 +452,12 @@ arma::mat comb_sliding_sets(const arma::ivec& indices_a,
     ix1_b = index_geq(pos_b, begin);
     ix2_b = index_greater(pos_b, end) - 1;
     if (ix1_a <= ix2_a && ix1_b <= ix2_b) {
-      int m_a = ix2_a - ix1_a + 1;
-      int m_b = ix2_b - ix1_b + 1;
+      R_xlen_t m_a = ix2_a - ix1_a + 1;
+      R_xlen_t m_b = ix2_b - ix1_b + 1;
       arma::mat matr(m_a * m_b, 3);
-      int ct = 0;
-      for (int i = ix1_a; i < ix2_a; ++i) {
-        for (int j = ix1_b; i < ix2_b; ++j, ++ct, ++len) {
+      R_xlen_t ct = 0;
+      for (R_xlen_t i = ix1_a; i < ix2_a; ++i) {
+        for (R_xlen_t j = ix1_b; i < ix2_b; ++j, ++ct, ++len) {
           matr(ct, 0) = indices_a(i + 1);
           matr(ct, 1) = indices_b(j + 1);
           matr(ct, 2) = wind + 1;
@@ -464,7 +465,7 @@ arma::mat comb_sliding_sets(const arma::ivec& indices_a,
       }
       stdlist.push_back(matr);
       ++wind;
-    } 
+    }
     begin += advance;
     end = begin + width;
   }

@@ -30,7 +30,7 @@ the recoded genotypes of "A/A", "A/B", "B/A" and "B/B" will be,
 2, 1, 1, 0, given \code{sep = "/"}.
 }
 \examples{
-geno <- structure(c("A/G", "G/A", "A/A", NA, "A/A", "G/G", NA, "G/G", 
+geno <- structure(c("A/G", "G/A", "A/A", NA, "A/A", "G/G", NA, "G/G",
                     "G/G", "A/A", "G/G", NA, "C/C", "C/C", "C/A", NA, "C/C", "C/C"),
                  .Dim = c(6L, 3L))
 transform_geno(geno, sep = '/')

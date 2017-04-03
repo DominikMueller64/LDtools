@@ -1,8 +1,7 @@
 Package: LDtools
 Title: Tools for Linkage Disequilibrium Analysis
-Version: 0.0.0
-Author: Author: Dominik Müller [aut, cre]
-Maintainer: Dominik Mueller <Dominik_Mueller@uni-hohenheim.de>
+Version: 1.0.0
+Authors@R: c(person("Dominik", "Mueller", email = "dominikmueller64@yahoo.de", role = c("aut", "cre")))
 Description: Tools for Linkage Disequilibrium Analysis.
 Depends:
     R (>= 3.3.1)
@@ -10,7 +9,7 @@ License: GPL-3 | file LICENSE
 LazyData: true
 LinkingTo: Rcpp, RcppArmadillo, RcppProgress, BH
 Imports:
-    Rcpp (>= 0.12.8),
+    Rcpp (>= 0.12.9),
     RcppArmadillo (>= 0.7.500.0.0),
     purrr (>= 0.2.2),
     BH (>= 1.60.0-2),
@@ -20,7 +19,8 @@ Suggests:
     knitr,
     testthat,
     rmarkdown,
-    magrittr
+    magrittr,
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 SystemRequirements: C++11

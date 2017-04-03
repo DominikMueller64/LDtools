@@ -17,6 +17,10 @@
     .Call('LDtools_comb_all', PACKAGE = 'LDtools', pos)
 }
 
+.comb_all_sets <- function(indices_a, indices_b, pos_a, pos_b) {
+    .Call('LDtools_comb_all_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b)
+}
+
 .comb_flank_sets <- function(indices_a, indices_b, pos_a, pos_b) {
     .Call('LDtools_comb_flank_sets', PACKAGE = 'LDtools', indices_a, indices_b, pos_a, pos_b)
 }

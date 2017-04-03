@@ -3,4 +3,7 @@
 ^data-raw$
 ^testfile\.R$
 ^vignettes$
-^\.travis\.yml$
+^.travis.yml$
+^pnrrs.R$
+^codecov.yml$
+^cran-comments.md$

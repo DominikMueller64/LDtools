@@ -57,6 +57,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// comb_all_sets
+arma::mat comb_all_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b);
+RcppExport SEXP LDtools_comb_all_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_a(indices_aSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type indices_b(indices_bSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_a(pos_aSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pos_b(pos_bSEXP);
+    rcpp_result_gen = Rcpp::wrap(comb_all_sets(indices_a, indices_b, pos_a, pos_b));
+    return rcpp_result_gen;
+END_RCPP
+}
 // comb_flank_sets
 arma::mat comb_flank_sets(const arma::ivec& indices_a, const arma::ivec& indices_b, const arma::vec& pos_a, const arma::vec& pos_b);
 RcppExport SEXP LDtools_comb_flank_sets(SEXP indices_aSEXP, SEXP indices_bSEXP, SEXP pos_aSEXP, SEXP pos_bSEXP) {
@@ -118,7 +132,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // index_geq
-int index_geq(const arma::vec& x, const double y);
+R_xlen_t index_geq(const arma::vec& x, const double y);
 RcppExport SEXP LDtools_index_geq(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -130,7 +144,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // index_greater
-int index_greater(const arma::vec& x, const double y);
+R_xlen_t index_greater(const arma::vec& x, const double y);
 RcppExport SEXP LDtools_index_greater(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -142,7 +156,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // find_closest
-int find_closest(const arma::vec& x, const double y);
+R_xlen_t find_closest(const arma::vec& x, const double y);
 RcppExport SEXP LDtools_find_closest(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -182,7 +196,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // LD_mult
-DataFrame LD_mult(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
+Rcpp::DataFrame LD_mult(arma::mat& X, const arma::vec& p, const arma::mat& matr, const bool is_phased, const bool any_na);
 RcppExport SEXP LDtools_LD_mult(SEXP XSEXP, SEXP pSEXP, SEXP matrSEXP, SEXP is_phasedSEXP, SEXP any_naSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -255,7 +269,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // sliding_window
-DataFrame sliding_window(arma::vec& x, arma::vec& pos, double start, double width, double advance, std::string stat);
+Rcpp::DataFrame sliding_window(arma::vec& x, arma::vec& pos, double start, double width, double advance, std::string stat);
 RcppExport SEXP LDtools_sliding_window(SEXP xSEXP, SEXP posSEXP, SEXP startSEXP, SEXP widthSEXP, SEXP advanceSEXP, SEXP statSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

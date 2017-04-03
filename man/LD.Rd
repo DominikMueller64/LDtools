@@ -28,8 +28,8 @@ computations are more efficient for phased genotypes.}
 \itemize{
   \item{D}{ Linkage disequilibrium estimate}
   \item{Dprime}{ Scaled linkage disequilibrium estimate}
-  \item{r}{ Correlation coefficient} 
-  \item{r2}{ Squared correlation coefficient} 
+  \item{r}{ Correlation coefficient}
+  \item{r2}{ Squared correlation coefficient}
   \item{n}{ Number of observations}
   \item{chis2}{ Chi-square statistic for linkage
     equilibrium (i.e., D = Dprime = r = r2 = 0)}
@@ -40,37 +40,37 @@ computations are more efficient for phased genotypes.}
 Compute the linkage disequilibrium (LD) between a pair of loci.
 }
 \details{
-For computing LD among a large number of loci, please use 
+For computing LD among a large number of loci, please use
 \code{\link{LD_mult}}, which is much more efficient for that.
 
 Linkage disequilibrium (LD) is the non-random association of
 marker alleles and can arise from marker proximity or from selection
 bias.
- 
+
 Three estimators of LD are computed:
  \itemize{
-   
+
    \item{D}{ raw difference in frequency between the
       observed number of AB pairs and the expected number:
-        
+
         \deqn{%
           D = p_{AB} - p_A p_B %
         }{%
           D = p(AB) - p(A)*p(B) %
         }
-      
+
     }
-    \item{D'}{ scaled D spanning the range [-1,1] 
-      
-     
+    \item{D'}{ scaled D spanning the range [-1,1]
+
+
      \deqn{D' = \frac{D}{D_{max} } }{D' = D / Dmax}
-       
+
        where, if D > 0:
        \deqn{%
         D_{max} = \min( p_A p_b, p_a p_B )  %
         }{%
         Dmax = min( p(A)p(b), p(a)p(B) )   %
-        } 
+        }
         or if D < 0:
         \deqn{%
         D_{max} = \max{ -p_A p_B, -p_a p_b }  %
@@ -78,9 +78,9 @@ Three estimators of LD are computed:
         Dmax = max( -p(A)p(B), -p(a)p(b) )  %
         }
     }
-       
+
      \item{r}{ correlation coefficient between the markers
-     
+
      \deqn{%
      r = \frac{-D}{\sqrt( p_A * p_a * p_B * p_b  )} %
       }{%
@@ -88,7 +88,7 @@ Three estimators of LD are computed:
       }
       }
   }
-        
+
    where
    \itemize{
    \item{-}{ \eqn{p_A}{p(A)} is defined as the observed probability of
@@ -102,7 +102,7 @@ Three estimators of LD are computed:
    \item{-}{\eqn{p_{AB}}{p(AB)} is defined as the probability of
    the marker allele pair 'AB'. }
    }
-   
+
    For genotype data, AB/ab cannot be distinguished from
    aB/Ab. Consequently, we estimate \eqn{p_{AB}}{p(AB)} using maximum
    likelihood and use this value in the computations.
@@ -123,7 +123,7 @@ any_na = TRUE)
 }
 \author{
 Dominik Mueller (\email{dominikmueller64@yahoo.de})
-The documentation is adapted from the \link[genetics]{LD} function of the 
-\href{https://cran.r-project.org/web/packages/genetics/index.html}{genetics} 
+The documentation is adapted from the \link[genetics]{LD} function of the
+\href{https://cran.r-project.org/web/packages/genetics/index.html}{genetics}
 package by \href{https://sites.google.com/a/warnes.net/resume/}{Gregory Warnes}.
 }

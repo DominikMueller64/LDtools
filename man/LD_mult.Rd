@@ -37,7 +37,7 @@ For the documentation of the calculated LD statistics, see
 \code{\link{LD}}.
 }
 \examples{
-\dontrun{ 
+\dontrun{
 data('population', package = 'LDtools')
 pos <- map$pos
 
@@ -66,7 +66,7 @@ dat <- by(data = dat, INDICES = factor(dat$block),
 dat <- do.call(rbind, dat)
 with(dat, plot(pos, r, type = 'l'))
 }
- 
+
 }
 \seealso{
 { \code{\link{transform_geno}}, \code{\link{LD}},

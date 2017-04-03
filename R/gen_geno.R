@@ -16,9 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #' Generate unphased genotypes
-#' 
+#'
 #' @description Generate a random sample of unphased genotypes.
-#' 
+#'
 #' @param nucleotides A character vector. The allowed nucleatides.
 #' @param n An integer. The number of genotypes.
 #' @param m An integer. The number of loci.
@@ -26,21 +26,21 @@
 #' @param shape1 A numeric. The first shape parameter of the beta distribution.
 #' @param shape2 A numeric. The second shape parameter of the beta distribution.
 #' @param sep A character. The seperator used between nucleotides.
-#' 
+#'
 #' @details This function can be used to simulate genotypes and is mainly for
 #' testing purposes. The allele frequency of each locus is drawn from a beta with
 #' parameters \code{shape1} and \code{shape2}.
 #' Note: If \code{shape1 == shape2}, the beta distribution is symmetric.
-#' 
+#'
 #' @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
-#' 
+#'
 #' @examples
-#' .gen_geno(n = 2, m = 5) 
-#'  
+#' .gen_geno(n = 2, m = 5)
+#'
 #' @export
 .gen_geno <- function(nucleotides = c("A", "C", "G", "T"),
                      n, m, prob_na = 0.2,
-                     shape1 = 4, shape2 = 4, sep = '/') {  
+                     shape1 = 4, shape2 = 4, sep = '/') {
 
   if (!is.atomic(nucleotides) || !is.character(nucleotides))
     stop("'nucleotides' must be a character vector")

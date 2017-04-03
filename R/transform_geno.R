@@ -16,17 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #' Transform genotypes
-#' 
+#'
 #' @description Transform genotypes from two-letter coding to numeric
 #' coding.
-#' 
+#'
 #' @param geno A character matrix containing the genotypes.
 #' @param sep A character string use to split the genotypes in \code{geno}.
 #' @param check Should checks be performed?
 #'
 #' @return A numeric matrix of the same dimensions as geno containing the
 #' recoded genotypes.
-#' 
+#'
 #' @details A genotype must consist of a sequence of three characters,
 #' where the mittle character is the seperator as specified in
 #' \code{sep}. Recoding is performed based on the major allele at the
@@ -37,7 +37,7 @@
 #' @author Dominik Mueller (\email{dominikmueller64@@yahoo.de})
 #'
 #' @examples
-#' geno <- structure(c("A/G", "G/A", "A/A", NA, "A/A", "G/G", NA, "G/G", 
+#' geno <- structure(c("A/G", "G/A", "A/A", NA, "A/A", "G/G", NA, "G/G",
 #'                     "G/G", "A/A", "G/G", NA, "C/C", "C/C", "C/A", NA, "C/C", "C/C"),
 #'                  .Dim = c(6L, 3L))
 #' transform_geno(geno, sep = '/')
@@ -46,7 +46,7 @@
 transform_geno <- function(geno, sep = '/', check = TRUE){
 
   if (check) {
-    if (!is.matrix(geno) || !is.character(geno)) 
+    if (!is.matrix(geno) || !is.character(geno))
       stop("'geno' must be a character matrix.")
 
     if (!is.character(sep) || length(sep) != 1L)
@@ -79,7 +79,6 @@ transform_geno <- function(geno, sep = '/', check = TRUE){
     major_freq[i] <- tb[major_allele] / sum(tb)
     new_geno[, i] <- purrr::map_int(l, ~ sum(.x == major_allele))
   }
-  
+
   return(list('geno' = new_geno, 'p' = major_freq))
 }
-

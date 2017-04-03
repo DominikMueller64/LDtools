@@ -43,7 +43,7 @@ pos <- sort(runif(n))
 plot(x = pos, y = x)
 advance <- 0.01
 width <- c(0.02, 0.1, 0.2)
-colors <- c('red', 'green', 'blue') 
+colors <- c('red', 'green', 'blue')
 for (i in seq_along(width)) {
   df <- sliding_window(x, pos, 0.0, width[i], advance, "mean")
   points(x = df$begin + width[i] / 2, df$stat, col = colors[i], pch = 19, lwd = 2.0, type = 'l')

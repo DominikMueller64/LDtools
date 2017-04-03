@@ -7,6 +7,8 @@
 \alias{comb_all}
 \alias{comb_nearest}
 \alias{comb_nearest_k}
+\alias{comb_all_sets}
+\alias{comb_wind_sets}
 \alias{comb_flank}
 \alias{comb_sliding}
 \title{Combinations of loci.}
@@ -20,6 +22,10 @@ comb_all(pos)
 comb_nearest(indices, indices2, pos, pos2)
 
 comb_nearest_k(indices, indices2, pos, pos2, k)
+
+comb_all_sets(indices, indices2, pos, pos2)
+
+comb_wind_sets(indices, indices2, pos, pos2, min_dist, max_dist)
 
 comb_flank(indices, indices2, pos, pos2)
 
@@ -64,6 +70,10 @@ Combinations among nearest loci.
 
 Combinations among nearest loci.
 
+Combinations among all loci of two sets.
+
+Combinations among different sets of loci with minimum and maximum distance.
+
 Combinations between flaning loci.
 
 Combinations among loci in a sliding window.
@@ -99,11 +109,14 @@ pos <- sort(runif(10))
 comb_wind(pos, min_dist = c(0.1, 0.3, 0.8), max_dist = c(0.2, 0.7, 0.9))
 comb_adj(pos)
 comb_all(pos)
- pos2 <- sort(runif(10L, min = 0, max = max(pos)))
+pos2 <- sort(runif(10L, min = 0, max = max(pos)))
 indices1 <- which(sort(c(pos, pos2)) \%in\% pos)
 indices2 <- which(sort(c(pos, pos2)) \%in\% pos2)
 comb_nearest(indices1, indices2, pos, pos2)
 comb_nearest_k(indices1, indices2, pos, pos2, 3)
+comb_all_sets(indices1, indices2, pos, pos2)
+comb_wind_sets(indices1, indices2, pos, pos2,
+               min_dist = c(0.1, 0.3, 0.8), max_dist = c(0.2, 0.7, 0.9))
 comb_flank(indices1, indices2, pos, pos2)
 comb_sliding(pos, 0, 0.2, 0.1)
 }
